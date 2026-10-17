@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #090D16;
+  color: #FFFFFF;
+}
+
+body {
+  background-color: #090D16;
+  color: #FFFFFF;
+  background-image: radial-gradient(circle, rgba(0, 210, 255, 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+  overflow-x: hidden;
+}
+
+/* Custom Cyber Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090D16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00D2FF;
+}
+
+/* Details summary marker removal for custom accordion styling */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px #00F5A0);
+  }
+  50% {
+    opacity: 0.45;
+    filter: drop-shadow(0 0 1px #00F5A0);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2.4s infinite ease-in-out;
+}
