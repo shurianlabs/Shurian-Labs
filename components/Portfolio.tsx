@@ -10,95 +10,75 @@ interface ProjectItem {
   badge: string;
   shortDesc: string;
   image?: string;
-  liveUrl?: string;
-  customVisual?: "mp" | "autocentro" | "orono";
+  liveUrl: string;
+  displayUrl: string;
+  customVisual?: "orono" | "punto-barba";
   features: string[];
 }
 
 const PROJECTS: ProjectItem[] = [
   {
-    id: "shurian-store",
+    id: "shurian",
     name: "Shurian Store & Servicio Técnico",
-    clientType: "Tienda de Tecnología y Laboratorio en Rosario",
+    clientType: "Tecnología, Accesorios y Laboratorio",
     badge: "Tienda Online + Reparaciones",
     shortDesc:
-      "Catálogo de productos con carrito de compras directo a WhatsApp y cotizador rápido de reparaciones.",
+      "Catálogo de tecnología con carrito de pedidos directo a WhatsApp y cotizador rápido de reparaciones en tiempo real.",
     image: "/portfolio/shurian-store.png",
-    liveUrl: "https://shurian.com.ar",
+    liveUrl: "https://shurian.vercel.app/",
+    displayUrl: "shurian.vercel.app",
     features: [
-      "Catálogo de accesorios y repuestos con precios actualizados.",
-      "Carrito de compras que envía el pedido listo al WhatsApp del local.",
-      "Sección para cotizar arreglos de celulares, consolas y notebooks.",
+      "Catálogo de accesorios, repuestos y tecnología con precios actualizados.",
+      "Carrito de compras inteligente con envío de pedido directo al WhatsApp.",
+      "Asistente interactivo para presupuestar y consultar el estado de reparaciones.",
     ],
   },
   {
-    id: "danti-bikes",
-    name: "Danti Bikes",
-    clientType: "Bicicletería y Taller Oficial",
-    badge: "Catálogo Web Interactivo",
+    id: "resetart-barbershop",
+    name: "Reset ART Barbershop",
+    clientType: "Barbería Premium & Academia",
+    badge: "Landing Page + Academia",
     shortDesc:
-      "Página web con catálogo de bicicletas filtrable por rodado, marca y color, con botón de consulta rápida.",
-    image: "/portfolio/danti-bikes.png",
+      "Sitio web moderno con identidad visual de impacto, catálogo de servicios, cursos y contacto directo.",
+    image: "/portfolio/barberia-hero.png",
+    liveUrl: "https://resetart-barbershop.vercel.app/",
+    displayUrl: "resetart-barbershop.vercel.app",
     features: [
-      "Filtros simples por rodado (26, 27.5, 29), marca y color.",
-      "Ficha de cada bicicleta con fotos en grande y características.",
-      "Panel privado para que el dueño agregue bicis o cambie precios en segundos.",
+      "Diseño de alto impacto visual optimizado para celulares y computadoras.",
+      "Presentación de cortes, estilos, servicios de barbería y programas de academia.",
+      "Acceso directo para consultas y reservas por WhatsApp en un toque.",
     ],
   },
   {
-    id: "mundo-automocion",
-    name: "Mundo Automoción",
-    clientType: "Taller y Estética Vehicular",
-    badge: "Sistema de Gestión de Taller",
+    id: "punto-barba",
+    name: "Punto Barba Barbería",
+    clientType: "Barbería & Cuidado Masculino",
+    badge: "Sistema de Turnos Online",
     shortDesc:
-      "Panel de control para organizar los autos en el taller, ver entregas del día y avisar al cliente por WhatsApp.",
-    image: "/portfolio/mundo-automocion.png",
+      "Plataforma oficial con reserva de turnos online, elección de barbero, horarios disponibles y beneficios exclusivos.",
+    customVisual: "punto-barba",
+    liveUrl: "https://www.puntobarbabarberia.com.ar/",
+    displayUrl: "puntobarbabarberia.com.ar",
     features: [
-      "Vista rápida de vehículos en taller, entregas de hoy y próximos turnos.",
-      "Búsqueda instantánea por patente o nombre del cliente.",
-      "Botón para notificar por WhatsApp cuando el vehículo está listo para retirar.",
-    ],
-  },
-  {
-    id: "mp-distribuciones",
-    name: "MP Distribuciones",
-    clientType: "Distribuidora Mayorista de Informática",
-    badge: "Portal Mayorista B2B",
-    shortDesc:
-      "Catálogo mayorista para comercios donde se actualizan miles de precios desde una planilla de Excel.",
-    customVisual: "mp",
-    features: [
-      "Carga masiva de listas de precios desde Excel en un solo clic.",
-      "Buscador rápido de insumos, conectores y periféricos para clientes del gremio.",
-      "Armado de pedido mayorista con envío directo por WhatsApp.",
-    ],
-  },
-  {
-    id: "accesorios-autocentro",
-    name: "Accesorios Autocentro (Carlitos Autopartes)",
-    clientType: "Casa de Repuestos y Autopartes en Rosario",
-    badge: "Catálogo + Control de Stock",
-    shortDesc:
-      "Tienda online de ópticas, espejos y repuestos conectada con el control de stock y clientes del negocio.",
-    customVisual: "autocentro",
-    features: [
-      "Búsqueda fácil de repuestos por marca, modelo y rubro.",
-      "Sincronización con las planillas de stock, clientes y proveedores del local.",
-      "Atención directa por WhatsApp desde cada repuesto.",
+      "Sistema de reservas online donde el cliente elige fecha, horario y profesional.",
+      "Recordatorios y confirmaciones automáticas para evitar ausencias.",
+      "Gestión de turnos y agenda centralizada para el equipo de trabajo.",
     ],
   },
   {
     id: "orono-bike",
     name: "Oroño Bike",
-    clientType: "Tienda de Ciclismo y Taller Especializado",
-    badge: "E-commerce + Calculadora de Cuotas",
+    clientType: "Tienda de Ciclismo & Taller Especializado",
+    badge: "E-commerce + Cuotas MercadoPago",
     shortDesc:
-      "Tienda online con cálculo automático de cuotas de MercadoPago, gestión de taller y facturación.",
+      "Tienda online de alto rendimiento con catálogo de bicicletas, simulador de cuotas de MercadoPago y gestión de taller.",
     customVisual: "orono",
+    liveUrl: "https://orono-bike.vercel.app/",
+    displayUrl: "orono-bike.vercel.app",
     features: [
-      "Calculadora automática de cuotas y promociones bancarias.",
-      "Catálogo completo de bicicletas, indumentaria y accesorios.",
-      "Panel de administración con control de ventas y stock.",
+      "Simulador automático de cuotas y promociones con tarjetas de crédito.",
+      "Catálogo completo de bicicletas de competición, accesorios e indumentaria.",
+      "Panel de administración integrado con facturación y control de stock.",
     ],
   },
 ];
@@ -120,8 +100,8 @@ export default function Portfolio() {
           Páginas y Sistemas que Hicimos
         </h2>
         <p className="text-[#94A3B8] text-sm sm:text-base mt-2">
-          Conocé algunos de los negocios reales que ya trabajan y venden todos
-          los días con nuestras páginas y sistemas.
+          Hacé clic en cualquier proyecto para ver lo que desarrollamos o
+          visitar el sitio web publicado en vivo.
         </p>
       </div>
 
@@ -136,15 +116,15 @@ export default function Portfolio() {
             {/* Browser Mockup Frame + Visual Preview */}
             <div>
               <div className="px-4 py-2.5 bg-[#090D16] border-b border-[#1E293B] flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500/70" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400/70" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#00F5A0]/70" />
-                  <span className="ml-2 text-xs text-[#94A3B8] truncate">
-                    {project.name}
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500/70 shrink-0" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400/70 shrink-0" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#00F5A0]/70 shrink-0" />
+                  <span className="ml-2 font-mono text-[11px] text-[#94A3B8] truncate">
+                    {project.displayUrl}
                   </span>
                 </div>
-                <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#131B2E] text-[#00D2FF] border border-[#1E293B]">
+                <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#131B2E] text-[#00D2FF] border border-[#1E293B] shrink-0 ml-2">
                   {project.badge}
                 </span>
               </div>
@@ -159,95 +139,36 @@ export default function Portfolio() {
                   />
                 )}
 
-                {project.customVisual === "mp" && (
-                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-[#090D16] via-[#101C35] to-[#090D16]">
+                {project.customVisual === "punto-barba" && (
+                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-[#090D16] via-[#1A1618] to-[#090D16]">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <img
-                          src="/portfolio/mp-distribuciones-logo.png"
-                          alt="MP Distribuciones"
-                          className="w-12 h-12 rounded-full object-contain bg-black p-0.5 border border-[#00D2FF]/40"
+                          src="/portfolio/punto-barba-logo.png"
+                          alt="Punto Barba"
+                          className="h-10 w-auto object-contain"
                         />
-                        <div>
-                          <span className="text-xs text-[#00D2FF] font-semibold block">
-                            PORTAL MAYORISTA
-                          </span>
-                          <span className="text-lg font-extrabold text-white">
-                            MP Distribuciones
-                          </span>
-                        </div>
                       </div>
-                      <span className="px-2.5 py-1 rounded-lg bg-[#00F5A0]/15 text-[#00F5A0] text-xs font-semibold">
-                        Lista Gremio Activa
+                      <span className="px-2.5 py-1 rounded-full bg-[#00F5A0]/15 text-[#00F5A0] text-xs font-semibold">
+                        Turnos Online Activos
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 my-auto pt-3">
                       <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
                         <span className="text-[11px] text-[#94A3B8] block">
-                          Catálogo Informático
+                          Reserva Digital
                         </span>
                         <span className="text-sm font-bold text-white mt-0.5 block">
-                          +1.500 Productos
+                          Elección de Profesional
                         </span>
                       </div>
                       <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
                         <span className="text-[11px] text-[#94A3B8] block">
-                          Actualización
+                          Recordatorios
                         </span>
                         <span className="text-sm font-bold text-[#00F5A0] mt-0.5 block">
-                          Directo desde Excel
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {project.customVisual === "autocentro" && (
-                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-[#090D16] via-[#131B2E] to-[#090D16]">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-white p-1.5 flex items-center justify-center">
-                          <img
-                            src="/portfolio/autocentro.png"
-                            alt="Accesorios Autocentro"
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <div>
-                          <span className="text-xs text-amber-400 font-semibold block">
-                            CORRIENTES 579 • ROSARIO
-                          </span>
-                          <span className="text-lg font-extrabold text-white">
-                            Accesorios Autocentro
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-2.5 my-auto pt-3">
-                      <div className="p-3 rounded-xl bg-[#090D16]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Rubros
-                        </span>
-                        <span className="text-xs font-bold text-white mt-0.5 block">
-                          Ópticas y Espejos
-                        </span>
-                      </div>
-                      <div className="p-3 rounded-xl bg-[#090D16]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Gestión
-                        </span>
-                        <span className="text-xs font-bold text-[#00D2FF] mt-0.5 block">
-                          Stock + Clientes
-                        </span>
-                      </div>
-                      <div className="p-3 rounded-xl bg-[#090D16]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Ventas
-                        </span>
-                        <span className="text-xs font-bold text-[#00F5A0] mt-0.5 block">
-                          Tienda + WhatsApp
+                          Avisos Automáticos
                         </span>
                       </div>
                     </div>
@@ -265,8 +186,8 @@ export default function Portfolio() {
                           OROÑO <span className="text-[#00D2FF]">BIKE</span>
                         </span>
                       </div>
-                      <span className="px-2.5 py-1 rounded-lg bg-[#00D2FF]/15 text-[#00D2FF] text-xs font-semibold">
-                        MercadoPago + AFIP
+                      <span className="px-2.5 py-1 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] text-xs font-semibold">
+                        MercadoPago
                       </span>
                     </div>
 
@@ -281,10 +202,10 @@ export default function Portfolio() {
                       </div>
                       <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
                         <span className="text-[11px] text-[#94A3B8] block">
-                          Administración
+                          Catálogo
                         </span>
                         <span className="text-sm font-bold text-[#00F5A0] mt-0.5 block">
-                          Ventas y Facturación
+                          Bicis y Accesorios
                         </span>
                       </div>
                     </div>
@@ -317,9 +238,11 @@ export default function Portfolio() {
 
               <div className="mt-5 pt-4 border-t border-[#1E293B] flex items-center justify-between text-xs font-semibold text-white">
                 <span className="group-hover:text-[#00F5A0] transition-colors">
-                  Tocá para ver más detalles
+                  Ver detalles del proyecto
                 </span>
-                <ExternalLink className="w-4 h-4 text-[#94A3B8] group-hover:text-[#00D2FF]" />
+                <span className="font-mono text-[#00D2FF] flex items-center gap-1">
+                  Visitar web <ExternalLink className="w-3.5 h-3.5" />
+                </span>
               </div>
             </div>
           </article>
@@ -385,17 +308,15 @@ export default function Portfolio() {
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-end gap-3">
-                {selected.liveUrl && (
-                  <a
-                    href={selected.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#090D16] border border-[#1E293B] hover:border-[#00D2FF] text-xs font-semibold text-white"
-                  >
-                    <span>Visitar Sitio Web</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                )}
+                <a
+                  href={selected.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#090D16] border border-[#00D2FF]/50 hover:border-[#00D2FF] text-xs font-semibold text-[#00D2FF]"
+                >
+                  <span>Abrir {selected.displayUrl}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
                 <a
                   href="#contacto"
                   onClick={() => setSelected(null)}
