@@ -33,7 +33,7 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex items-center gap-3 pt-1">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/shurian_labs/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram de Shurian Labs"
