@@ -9,9 +9,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[#131B2E] border border-[#1E293B]">
-                <Logo iconOnly className="w-8 h-8" />
-              </div>
+              <Logo iconOnly className="w-10 h-10" />
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-bold tracking-wider text-white text-lg">
@@ -70,14 +68,6 @@ export default function Footer() {
               Secciones
             </h3>
             <ul className="space-y-2 text-sm text-[#94A3B8]">
-              <li>
-                <a
-                  href="#servicios"
-                  className="hover:text-[#00D2FF] transition-colors duration-200"
-                >
-                  Nuestros Servicios
-                </a>
-              </li>
               <li>
                 <a
                   href="#casos"

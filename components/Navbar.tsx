@@ -23,8 +23,8 @@ export default function Navbar() {
           className="flex items-center gap-3 group"
           aria-label="Shurian Labs Inicio"
         >
-          <div className="flex items-center justify-center rounded-lg bg-[#131B2E] border border-[#1E293B] p-1.5 transition-all duration-200 group-hover:border-[#00D2FF]/60">
-            <Logo iconOnly className="w-7 h-7" />
+          <div className="flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
+            <Logo iconOnly className="w-9 h-9" priority />
           </div>
           <div className="flex items-center gap-1.5">
             <span className="font-bold tracking-wider text-white text-base sm:text-lg">
