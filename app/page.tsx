@@ -6,6 +6,7 @@ import Methodology from "@/components/Methodology";
 import Faq from "@/components/Faq";
 import ContactCta from "@/components/ContactCta";
 import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 export default function HomePage() {
   return (
@@ -33,7 +34,10 @@ export default function HomePage() {
         <ContactCta />
       </main>
 
-      {/* 8. Footer */}
+      {/* 8. Botón flotante persistente de WhatsApp */}
+      <FloatingWhatsApp />
+
+      {/* 9. Footer */}
       <Footer />
     </div>
   );

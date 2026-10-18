@@ -9,8 +9,8 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="p-1.5 rounded-lg bg-[#131B2E] border border-[#1E293B]">
-                <Logo className="w-auto h-12" />
+              <div className="p-2 rounded-lg bg-[#131B2E] border border-[#1E293B]">
+                <Logo iconOnly className="w-8 h-8" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
@@ -53,7 +53,7 @@ export default function Footer() {
                 <Linkedin className="w-4 h-4" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/shurianlabs/Shurian-Labs"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub de Shurian Labs"
@@ -83,7 +83,15 @@ export default function Footer() {
                   href="#casos"
                   className="hover:text-[#00D2FF] transition-colors duration-200"
                 >
-                  Casos de Éxito
+                  Páginas que Hicimos
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#servicios"
+                  className="hover:text-[#00D2FF] transition-colors duration-200"
+                >
+                  Nuestros Servicios
                 </a>
               </li>
               <li>
@@ -96,18 +104,18 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#stack"
-                  className="hover:text-[#00D2FF] transition-colors duration-200"
-                >
-                  Calidad y Tecnología
-                </a>
-              </li>
-              <li>
-                <a
                   href="#faq"
                   className="hover:text-[#00D2FF] transition-colors duration-200"
                 >
                   Preguntas Frecuentes
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contacto"
+                  className="hover:text-[#00D2FF] transition-colors duration-200"
+                >
+                  Pedir Presupuesto
                 </a>
               </li>
             </ul>
@@ -128,7 +136,9 @@ export default function Footer() {
                 nuestro laboratorio y tienda de servicio técnico.
               </p>
               <a
-                href="#shurian-servicio-tecnico"
+                href="https://shurian.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center justify-between w-full px-3.5 py-2.5 rounded-lg bg-[#090D16] border border-[#1E293B] hover:border-[#00D2FF] text-xs font-semibold text-white hover:text-[#00D2FF] transition-all duration-200"
               >
                 <span>Visitar Shurian Servicio Técnico</span>

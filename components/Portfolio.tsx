@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import { ExternalLink, Eye, X, CheckCircle2, MessageCircle } from "lucide-react";
 
 interface ProjectItem {
@@ -85,6 +86,23 @@ const PROJECTS: ProjectItem[] = [
 export default function Portfolio() {
   const [selected, setSelected] = useState<ProjectItem | null>(null);
 
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelected(null);
+      }
+    };
+    if (selected) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [selected]);
+
   return (
     <section
       id="casos"
@@ -130,10 +148,12 @@ export default function Portfolio() {
 
               {/* Project Screenshot Frame */}
               <div className="relative h-56 sm:h-64 bg-[#090D16] overflow-hidden border-b border-[#1E293B]">
-                <img
+                <Image
                   src={project.image}
-                  alt={project.name}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  alt={`Captura de pantalla de ${project.name}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
 
                 {/* Hover Overlay */}
@@ -164,9 +184,17 @@ export default function Portfolio() {
                 <span className="group-hover:text-[#00F5A0] transition-colors">
                   Ver detalles del proyecto
                 </span>
-                <span className="font-mono text-[#00D2FF] flex items-center gap-1">
-                  Visitar web <ExternalLink className="w-3.5 h-3.5" />
-                </span>
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="font-mono text-[#00D2FF] hover:underline flex items-center gap-1.5 py-1 px-2 -mr-2 rounded-lg hover:bg-[#090D16]/80 transition-colors"
+                  aria-label={`Visitar web de ${project.name}`}
+                >
+                  <span>Visitar web</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
           </article>
@@ -176,19 +204,24 @@ export default function Portfolio() {
       {/* Clean Modal when clicking a project */}
       {selected && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-project-title"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#090D16]/85 backdrop-blur-md"
           onClick={() => setSelected(null)}
         >
           <div
-            className="w-full max-w-xl rounded-2xl bg-[#131B2E] border border-[#00D2FF]/50 shadow-2xl overflow-hidden"
+            className="w-full max-w-xl rounded-2xl bg-[#131B2E] border border-[#00D2FF]/50 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {selected.image && (
-              <div className="h-56 bg-[#090D16] border-b border-[#1E293B] overflow-hidden">
-                <img
+              <div className="relative h-56 sm:h-64 bg-[#090D16] border-b border-[#1E293B] overflow-hidden">
+                <Image
                   src={selected.image}
-                  alt={selected.name}
-                  className="w-full h-full object-cover object-top"
+                  alt={`Captura completa de ${selected.name}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 600px"
+                  className="object-cover object-top"
                 />
               </div>
             )}
@@ -199,14 +232,18 @@ export default function Portfolio() {
                   <span className="text-xs font-semibold text-[#00F5A0]">
                     {selected.clientType}
                   </span>
-                  <h3 className="text-2xl font-bold text-white mt-0.5">
+                  <h3
+                    id="modal-project-title"
+                    className="text-2xl font-bold text-white mt-0.5"
+                  >
                     {selected.name}
                   </h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setSelected(null)}
-                  className="p-1.5 rounded-lg bg-[#090D16] text-[#94A3B8] hover:text-white"
+                  className="p-1.5 rounded-lg bg-[#090D16] text-[#94A3B8] hover:text-white transition-colors"
+                  aria-label="Cerrar modal"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -236,7 +273,7 @@ export default function Portfolio() {
                   href={selected.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#090D16] border border-[#00D2FF]/50 hover:border-[#00D2FF] text-xs font-semibold text-[#00D2FF]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#090D16] border border-[#00D2FF]/50 hover:border-[#00D2FF] text-xs font-semibold text-[#00D2FF] transition-colors"
                 >
                   <span>Abrir {selected.displayUrl}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -244,7 +281,7 @@ export default function Portfolio() {
                 <a
                   href="#contacto"
                   onClick={() => setSelected(null)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#00D2FF] to-[#00F5A0] text-[#090D16] font-bold text-xs sm:text-sm"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#00D2FF] to-[#00F5A0] text-[#090D16] font-bold text-xs sm:text-sm hover:shadow-[0_0_20px_rgba(0,245,160,0.35)] transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Quiero algo así para mi negocio</span>

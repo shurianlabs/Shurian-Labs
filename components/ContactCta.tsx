@@ -8,6 +8,7 @@ const SOLUTION_TYPES = [
   "Tienda Online",
   "Sistema de Gestión",
   "Automatizar WhatsApp",
+  "Quiero Asesoramiento",
 ] as const;
 
 export default function ContactCta() {
@@ -28,7 +29,7 @@ export default function ContactCta() {
       `• *Consulta:* ${cleanMsg}`,
     ].join("\n");
 
-    const url = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+    const url = `https://wa.me/5493416055274?text=${encodeURIComponent(whatsappText)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
@@ -70,8 +71,8 @@ export default function ContactCta() {
             <label className="block text-xs font-semibold text-white mb-2">
               ¿Qué estás buscando?
             </label>
-            <div className="grid grid-cols-2 gap-2">
-              {SOLUTION_TYPES.map((type) => {
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {SOLUTION_TYPES.map((type, idx) => {
                 const active = solutionType === type;
                 return (
                   <button
@@ -79,6 +80,8 @@ export default function ContactCta() {
                     type="button"
                     onClick={() => setSolutionType(type)}
                     className={`px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all duration-200 ${
+                      idx === SOLUTION_TYPES.length - 1 ? "col-span-2 sm:col-span-1" : ""
+                    } ${
                       active
                         ? "bg-gradient-to-r from-[#00D2FF]/20 to-[#00F5A0]/20 border-[#00D2FF] text-white"
                         : "bg-[#090D16] border-[#1E293B] text-[#94A3B8] hover:text-white"

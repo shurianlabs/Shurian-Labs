@@ -1,8 +1,18 @@
-export default function Logo({ className = "w-auto h-12" }: { className?: string }) {
+interface LogoProps {
+  className?: string;
+  iconOnly?: boolean;
+}
+
+export default function Logo({
+  className = "w-auto h-12",
+  iconOnly = false,
+}: LogoProps) {
+  const viewBox = iconOnly ? "165 40 270 285" : "0 0 600 620";
+
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
-      viewBox="0 0 600 700" 
+      viewBox={viewBox} 
       className={className}
       fill="none"
     >
@@ -52,31 +62,33 @@ export default function Logo({ className = "w-auto h-12" }: { className?: string
         <path d="M 265,155 L 245,155" stroke="url(#cyberGrad)" strokeWidth="6" strokeLinecap="round" />
       </g>
 
-      {/* TIPOGRAFÍA */}
-      <g textAnchor="middle">
-        <text 
-          x="300" 
-          y="475" 
-          fill="#FFFFFF" 
-          fontFamily="system-ui, -apple-system, sans-serif" 
-          fontSize="64" 
-          fontWeight="900" 
-          letterSpacing="6"
-        >
-          SHURIAN
-        </text>
-        <text 
-          x="300" 
-          y="555" 
-          fill="url(#cyberGrad)" 
-          fontFamily="'JetBrains Mono', monospace" 
-          fontSize="46" 
-          fontWeight="700" 
-          letterSpacing="10"
-        >
-          [LABS]
-        </text>
-      </g>
+      {/* TIPOGRAFÍA (Opcional si no es solo isotipo) */}
+      {!iconOnly && (
+        <g textAnchor="middle">
+          <text 
+            x="300" 
+            y="475" 
+            fill="#FFFFFF" 
+            fontFamily="system-ui, -apple-system, sans-serif" 
+            fontSize="64" 
+            fontWeight="900" 
+            letterSpacing="6"
+          >
+            SHURIAN
+          </text>
+          <text 
+            x="300" 
+            y="555" 
+            fill="url(#cyberGrad)" 
+            fontFamily="'JetBrains Mono', monospace" 
+            fontSize="46" 
+            fontWeight="700" 
+            letterSpacing="10"
+          >
+            [LABS]
+          </text>
+        </g>
+      )}
     </svg>
   );
 }

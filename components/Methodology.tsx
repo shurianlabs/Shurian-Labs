@@ -30,7 +30,7 @@ export default function Methodology() {
           Cómo Trabajamos
         </span>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Así de Fácil Empezamos
+          Un Proceso Claro de Principio a Fin
         </h2>
       </div>
 

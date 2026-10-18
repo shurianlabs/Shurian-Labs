@@ -5,8 +5,8 @@ export default function Hero() {
   return (
     <section className="pt-32 pb-16 md:pt-40 md:pb-20 px-4 sm:px-6 max-w-5xl mx-auto text-center">
       {/* Simple Top Pill with Logo */}
-      <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#131B2E] border border-[#1E293B] mb-6">
-        <Logo className="w-auto h-5" />
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#131B2E] border border-[#1E293B] mb-6">
+        <Logo iconOnly className="w-4 h-4" />
         <span className="text-xs sm:text-sm font-medium text-[#00F5A0]">
           Páginas Web, Tiendas Online y Sistemas a Medida
         </span>

@@ -24,9 +24,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SHURIAN [LABS] — Software Architecture & Business Automation",
+  title: "Shurian Labs — Páginas Web, Sistemas y Automatizaciones para Negocios",
   description:
-    "Desarrollamos aplicaciones web de alto rendimiento, sistemas de gestión a medida y flujos automatizados que eliminan tareas manuales y potencian tus ventas.",
+    "Desarrollamos páginas web, tiendas online y sistemas a medida que ordenan tu negocio, aumentan tus ventas y automatizan tus pedidos por WhatsApp.",
+  keywords: [
+    "páginas web",
+    "desarrollo web",
+    "tiendas online",
+    "sistemas a medida",
+    "automatización whatsapp",
+    "software para comercios",
+  ],
+  openGraph: {
+    title: "Shurian Labs — Páginas Web, Sistemas y Automatizaciones",
+    description:
+      "Desarrollamos páginas web, tiendas online y sistemas a medida que ordenan tu negocio y potencian tus ventas.",
+    type: "website",
+    locale: "es_AR",
+  },
 };
 
 export default function RootLayout({
