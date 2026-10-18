@@ -22,14 +22,14 @@ export default function Footer() {
                   </span>
                 </div>
                 <p className="text-xs text-[#94A3B8]">
-                  Páginas Web, Sistemas y Automatización para Negocios
+                  Páginas Web, Sistemas y Automatizaciones para Negocios
                 </p>
               </div>
             </div>
 
             <p className="text-sm text-[#94A3B8] max-w-sm leading-relaxed">
               Ayudamos a comercios, profesionales y empresas a vender más y
-              trabajar mejor con tecnología simple, rápida y hecha a medida.
+              trabajar mejor con tecnología rápida, moderna y hecha a medida.
             </p>
 
             {/* Social Links */}
