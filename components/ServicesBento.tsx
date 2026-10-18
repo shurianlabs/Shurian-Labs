@@ -35,7 +35,7 @@ export default function ServicesBento() {
           Qué Hacemos
         </span>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Soluciones Simples para tu Negocio
+          Soluciones para tu Negocio
         </h2>
       </div>
 
