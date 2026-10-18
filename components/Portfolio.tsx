@@ -9,10 +9,9 @@ interface ProjectItem {
   clientType: string;
   badge: string;
   shortDesc: string;
-  image?: string;
+  image: string;
   liveUrl: string;
   displayUrl: string;
-  customVisual?: "orono" | "punto-barba";
   features: string[];
 }
 
@@ -24,7 +23,7 @@ const PROJECTS: ProjectItem[] = [
     badge: "Tienda Online + Reparaciones",
     shortDesc:
       "Catálogo de tecnología con carrito de pedidos directo a WhatsApp y cotizador rápido de reparaciones en tiempo real.",
-    image: "/portfolio/shurian-store.png",
+    image: "/portfolio/shurian-home.png",
     liveUrl: "https://shurian.vercel.app/",
     displayUrl: "shurian.vercel.app",
     features: [
@@ -40,7 +39,7 @@ const PROJECTS: ProjectItem[] = [
     badge: "Landing Page + Academia",
     shortDesc:
       "Sitio web moderno con identidad visual de impacto, catálogo de servicios, cursos y contacto directo.",
-    image: "/portfolio/barberia-hero.png",
+    image: "/portfolio/resetart-home.png",
     liveUrl: "https://resetart-barbershop.vercel.app/",
     displayUrl: "resetart-barbershop.vercel.app",
     features: [
@@ -56,7 +55,7 @@ const PROJECTS: ProjectItem[] = [
     badge: "Sistema de Turnos Online",
     shortDesc:
       "Plataforma oficial con reserva de turnos online, elección de barbero, horarios disponibles y beneficios exclusivos.",
-    customVisual: "punto-barba",
+    image: "/portfolio/puntobarba-home.png",
     liveUrl: "https://www.puntobarbabarberia.com.ar/",
     displayUrl: "puntobarbabarberia.com.ar",
     features: [
@@ -72,7 +71,7 @@ const PROJECTS: ProjectItem[] = [
     badge: "E-commerce + Cuotas MercadoPago",
     shortDesc:
       "Tienda online de alto rendimiento con catálogo de bicicletas, simulador de cuotas de MercadoPago y gestión de taller.",
-    customVisual: "orono",
+    image: "/portfolio/orono-home.png",
     liveUrl: "https://orono-bike.vercel.app/",
     displayUrl: "orono-bike.vercel.app",
     features: [
@@ -129,88 +128,13 @@ export default function Portfolio() {
                 </span>
               </div>
 
-              {/* Project Screenshot or Visual Mockup */}
+              {/* Project Screenshot Frame */}
               <div className="relative h-56 sm:h-64 bg-[#090D16] overflow-hidden border-b border-[#1E293B]">
-                {project.image && (
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                  />
-                )}
-
-                {project.customVisual === "punto-barba" && (
-                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-[#090D16] via-[#1A1618] to-[#090D16]">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src="/portfolio/punto-barba-logo.png"
-                          alt="Punto Barba"
-                          className="h-10 w-auto object-contain"
-                        />
-                      </div>
-                      <span className="px-2.5 py-1 rounded-full bg-[#00F5A0]/15 text-[#00F5A0] text-xs font-semibold">
-                        Turnos Online Activos
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 my-auto pt-3">
-                      <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Reserva Digital
-                        </span>
-                        <span className="text-sm font-bold text-white mt-0.5 block">
-                          Elección de Profesional
-                        </span>
-                      </div>
-                      <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Recordatorios
-                        </span>
-                        <span className="text-sm font-bold text-[#00F5A0] mt-0.5 block">
-                          Avisos Automáticos
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {project.customVisual === "orono" && (
-                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-[#090D16] via-[#0F2429] to-[#090D16]">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-xs text-[#00F5A0] font-semibold block">
-                          TIENDA &amp; TALLER DE CICLISMO
-                        </span>
-                        <span className="text-2xl font-black tracking-tight text-white">
-                          OROÑO <span className="text-[#00D2FF]">BIKE</span>
-                        </span>
-                      </div>
-                      <span className="px-2.5 py-1 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] text-xs font-semibold">
-                        MercadoPago
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 my-auto pt-3">
-                      <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Financiación
-                        </span>
-                        <span className="text-sm font-bold text-white mt-0.5 block">
-                          Simulador de Cuotas
-                        </span>
-                      </div>
-                      <div className="p-3 rounded-xl bg-[#131B2E]/90 border border-[#1E293B]">
-                        <span className="text-[11px] text-[#94A3B8] block">
-                          Catálogo
-                        </span>
-                        <span className="text-sm font-bold text-[#00F5A0] mt-0.5 block">
-                          Bicis y Accesorios
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                />
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-[#090D16]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
