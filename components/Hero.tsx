@@ -22,8 +22,8 @@ export default function Hero() {
 
       {/* Short, Clear Subtitle */}
       <p className="text-base sm:text-xl text-[#94A3B8] max-w-2xl mx-auto mt-6 leading-relaxed">
-        Diseños modernos, súper fáciles de usar desde el celular y conectados
-        directo a tu WhatsApp. Sin vueltas ni complicaciones técnicas.
+        Diseños modernos y optimizados para celulares y PC, con integraciones
+        ágiles para potenciar la presencia y gestión de tu negocio.
       </p>
 
       {/* Primary Actions */}
