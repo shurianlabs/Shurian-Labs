@@ -21,10 +21,10 @@ const FAQS = [
       "Conectamos un asistente automático a tu WhatsApp comercial para que responda al instante las preguntas repetitivas (precios, horarios, stock, estado de un pedido o turnos disponibles). Vos seguís teniendo el control total y podés intervenir en la conversación cuando quieras.",
   },
   {
-    id: "faq-propiedad",
-    question: "¿La página web o el sistema queda siendo mío?",
+    id: "faq-modalidades-pago",
+    question: "¿Cuáles son las modalidades de pago?",
     answer:
-      "Sí, es 100% tuyo. No te atamos a contratos forzosos ni comisiones por tus ventas. Todo el sistema, tu página web y la base de datos de tus clientes quedan a nombre de tu negocio.",
+      "Nos adaptamos a lo que mejor le sirva a tu negocio con dos modalidades: podés elegir un desarrollo 'llave en mano' (un único pago por el proyecto terminado y listo para usar) o bien un costo inicial menor acompañado de una suscripción mensual accesible que incluye mantenimiento, soporte técnico continuo y mejoras.",
   },
 ];
 
