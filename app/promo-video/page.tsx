@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
-  title: "Shurian Labs — Video Promocional 9:16 (Reels & TikTok)",
+  title: "Video Promocional 9:16 (Remotion) — Shurian Labs",
   description:
-    "Estudio audiovisual interactivo para generar y descargar el video promocional de 15 segundos en formato vertical 9:16 para Instagram Reels y TikTok.",
+    "Componente de video programático en React/Remotion (1080x1920, 30fps, 15 segundos) para Instagram Reels y TikTok.",
 };
 
+const RemotionPlayerClient = dynamic(
+  () => import("./RemotionPlayerClient"),
+  { ssr: false }
+);
+
 export default function PromoVideoPage() {
-  return (
-    <div className="w-full min-h-screen bg-[#05070B]">
-      <iframe
-        src="/promo-video.html"
-        className="w-full h-screen border-0"
-        title="Shurian Labs Video Promocional 9:16"
-      />
-    </div>
-  );
+  return <RemotionPlayerClient />;
 }
