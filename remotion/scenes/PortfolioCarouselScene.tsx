@@ -6,6 +6,7 @@ import {
   spring,
   interpolate,
   Img,
+  staticFile,
 } from "remotion";
 
 interface ProjectCard {
@@ -23,7 +24,7 @@ const PROJECTS: ProjectCard[] = [
     category: "Tecnología & Reparaciones",
     tag: "🛍️ TIENDA ONLINE + WHATSAPP",
     tagColor: "#00D2FF",
-    image: "/portfolio/shurian-home.png",
+    image: "portfolio/shurian-home.png",
     feature: "Carrito inteligente con pedidos directo al WhatsApp",
   },
   {
@@ -31,7 +32,7 @@ const PROJECTS: ProjectCard[] = [
     category: "Barbería & Academia",
     tag: "💈 LANDING PAGE + CURSOS",
     tagColor: "#00F5A0",
-    image: "/portfolio/resetart-home.png",
+    image: "portfolio/resetart-home.png",
     feature: "Diseño visual de alto impacto con catálogo de cortes",
   },
   {
@@ -39,7 +40,7 @@ const PROJECTS: ProjectCard[] = [
     category: "Ciclismo & Competición",
     tag: "🚴 E-COMMERCE + MERCADOPAGO",
     tagColor: "#00D2FF",
-    image: "/portfolio/orono-home.png",
+    image: "portfolio/orono-home.png",
     feature: "Catálogo completo y simulador de cuotas en vivo",
   },
   {
@@ -47,7 +48,7 @@ const PROJECTS: ProjectCard[] = [
     category: "Estilo & Cuidado Masculino",
     tag: "📅 SISTEMA DE TURNOS 24/7",
     tagColor: "#00F5A0",
-    image: "/portfolio/puntobarba-home.png",
+    image: "portfolio/puntobarba-home.png",
     feature: "Reserva de turnos online por profesional y horario",
   },
 ];
@@ -79,7 +80,6 @@ export const PortfolioCarouselScene: React.FC = () => {
   });
 
   // Calculate carousel vertical translation
-  // Moves cards vertically up in a fluid roll
   const cardHeight = 980;
   const spacing = 40;
   const totalOffset = -(activeIndex * (cardHeight + spacing));
@@ -144,7 +144,7 @@ export const PortfolioCarouselScene: React.FC = () => {
                 {/* Image Mockup Preview */}
                 <div className="relative w-full h-[640px] rounded-[24px] overflow-hidden border border-[#1E293B] bg-[#090D16]">
                   <Img
-                    src={proj.image}
+                    src={staticFile(proj.image)}
                     alt={proj.name}
                     className="w-full h-full object-cover object-top"
                   />

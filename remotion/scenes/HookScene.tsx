@@ -6,6 +6,7 @@ import {
   spring,
   interpolate,
   Img,
+  staticFile,
 } from "remotion";
 
 export const HookScene: React.FC = () => {
@@ -118,7 +119,7 @@ export const HookScene: React.FC = () => {
           {/* Screenshot inside laptop */}
           <div className="w-full h-[420px] rounded-2xl overflow-hidden relative">
             <Img
-              src="/portfolio/shurian-home.png"
+              src={staticFile("portfolio/shurian-home.png")}
               alt="Shurian Web Preview"
               className="w-full h-full object-cover object-top"
             />
@@ -137,7 +138,7 @@ export const HookScene: React.FC = () => {
           <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-20" />
           <div className="w-full h-full rounded-[34px] overflow-hidden">
             <Img
-              src="/portfolio/puntobarba-home.png"
+              src={staticFile("portfolio/puntobarba-home.png")}
               alt="Mobile Turnos Online"
               className="w-full h-full object-cover object-top"
             />

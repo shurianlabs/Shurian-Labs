@@ -1,5 +1,5 @@
 import React from "react";
-import { Img, useCurrentFrame, interpolate } from "remotion";
+import { Img, staticFile, useCurrentFrame, interpolate } from "remotion";
 
 interface LogoProps {
   size?: number;
@@ -46,7 +46,7 @@ export const Logo: React.FC<LogoProps> = ({
         }}
       >
         <Img
-          src="/logo-icon.png"
+          src={staticFile("logo-icon.png")}
           alt="Shurian Labs Logo"
           className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(0,210,255,0.6)]"
         />
