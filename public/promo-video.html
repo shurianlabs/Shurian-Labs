@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shurian Labs — Video Promocional 9:16 (Reels / TikTok)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: #05070B;
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* Ambient glow background */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(0, 210, 255, 0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 245, 160, 0.06) 0%, transparent 50%),
+                  #05070B;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    header.studio-header {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .studio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(19, 27, 46, 0.8);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: 9999px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #00D2FF;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.15);
+      margin-bottom: 10px;
+    }
+
+    .studio-badge .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #00F5A0;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00F5A0;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1.studio-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    p.studio-subtitle {
+      color: #94A3B8;
+      font-size: 14px;
+    }
+
+    /* Main Stage Layout */
+    .stage-wrapper {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    /* 9:16 Video Player Container */
+    .phone-mockup {
+      position: relative;
+      width: 360px;
+      height: 640px;
+      border-radius: 42px;
+      background: #090D16;
+      padding: 10px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8),
+                  0 0 40px rgba(0, 210, 255, 0.15),
+                  inset 0 0 0 2px rgba(255, 255, 255, 0.1),
+                  inset 0 0 0 3px rgba(0, 210, 255, 0.2);
+      border: 1px solid rgba(30, 41, 59, 0.8);
+    }
+
+    /* Notch & Camera */
+    .phone-island {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 22px;
+      background: #000;
+      border-radius: 14px;
+      z-index: 50;
+      box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+
+    /* Screen Area (9:16 exact ratio inside mockup) */
+    .video-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      background: #090D16;
+      contain: paint;
+    }
+
+    /* Video Canvas Layer for Export */
+    #renderCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: block;
+    }
+
+    /* UI Overlays inside Video (Timecode, audio indicator, watermark) */
+    .video-hud {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 18px 20px;
+    }
+
+    .hud-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .hud-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(9, 13, 22, 0.7);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #00D2FF;
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.5px;
+    }
+
+    .hud-timecode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: #00F5A0;
+      background: rgba(9, 13, 22, 0.7);
+      border: 1px solid rgba(0, 245, 160, 0.3);
+      padding: 4px 8px;
+      border-radius: 6px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hud-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .hud-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00D2FF, #00F5A0);
+      box-shadow: 0 0 10px #00F5A0;
+      transition: width 0.05s linear;
+    }
+
+    /* Control Panel on the right side */
+    .controls-panel {
+      width: 380px;
+      background: rgba(19, 27, 46, 0.7);
+      border: 1px solid #1E293B;
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+      padding-bottom: 14px;
+    }
+
+    .panel-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #00D2FF;
+      background: rgba(0, 210, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 210, 255, 0.25);
+    }
+
+    /* Timeline scrubber */
+    .timeline-control {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .timeline-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #94A3B8;
+    }
+
+    .scrubber {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #1E293B;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #00D2FF;
+      box-shadow: 0 0 10px #00D2FF;
+      cursor: pointer;
+      border: 2px solid #FFFFFF;
+    }
+
+    /* Scene Jumper Chips */
+    .scenes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .scene-btn {
+      background: rgba(9, 13, 22, 0.8);
+      border: 1px solid #1E293B;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scene-btn:hover {
+      border-color: rgba(0, 210, 255, 0.5);
+      background: rgba(0, 210, 255, 0.05);
+    }
+
+    .scene-btn.active {
+      border-color: #00F5A0;
+      background: rgba(0, 245, 160, 0.08);
+      box-shadow: 0 0 12px rgba(0, 245, 160, 0.2);
+    }
+
+    .scene-btn-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: #00D2FF;
+      margin-bottom: 4px;
+    }
+
+    .scene-btn.active .scene-btn-time {
+      color: #00F5A0;
+    }
+
+    .scene-btn-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #E2E8F0;
+    }
+
+    /* Playback Action Buttons */
+    .actions-grid {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: linear-gradient(135deg, #00D2FF, #00F5A0);
+      color: #090D16;
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 245, 160, 0.5);
+    }
+
+    .btn-secondary {
+      background: #1E293B;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+    }
+
+    .btn-record {
+      width: 100%;
+      background: linear-gradient(135deg, #EF4444, #F43F5E);
+      color: #FFFFFF;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);
+      padding: 14px 20px;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-record:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+    }
+
+    .btn-record.recording {
+      background: #991B1B;
+      animation: pulse-red 1s infinite alternate;
+    }
+
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+      100% { box-shadow: 0 0 35px rgba(239, 68, 68, 0.9); }
+    }
+
+    /* Sound Switch */
+    .sound-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(9, 13, 22, 0.6);
+      border: 1px solid #1E293B;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #94A3B8;
+    }
+
+    .toggle-checkbox {
+      cursor: pointer;
+      accent-color: #00F5A0;
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Audio visualizer bar inside HUD */
+    .audio-viz {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 14px;
+    }
+
+    .viz-bar {
+      width: 3px;
+      background: #00D2FF;
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.1s ease;
+    }
+
+    .storyboard-card {
+      margin-top: 10px;
+      background: rgba(9, 13, 22, 0.5);
+      border: 1px solid #1E293B;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.6;
+    }
+
+    .storyboard-card strong {
+      color: #FFFFFF;
+    }
+
+    .storyboard-card span.highlight {
+      color: #00D2FF;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-bg"></div>
+
+  <div class="app-container">
+    
+    <header class="studio-header">
+      <div class="studio-badge">
+        <span class="pulse-dot"></span>
+        <span>Estudio Audiovisual 9:16 • Shurian Labs</span>
+      </div>
+      <h1 class="studio-title">Video Promocional B2B (15 Segundos)</h1>
+      <p class="studio-subtitle">Renderizado interactivo a 60 FPS • Audio FX integrado • Descarga directa en MP4 / WebM</p>
+    </header>
+
+    <div class="stage-wrapper">
+      
+      <!-- Vertical 9:16 Smartphone Mockup -->
+      <div class="phone-mockup">
+        <div class="phone-island"></div>
+        <div class="video-viewport" id="viewport">
+          
+          <!-- Native Canvas (1080x1920 logical for crystal 4K/FHD clarity) -->
+          <canvas id="renderCanvas" width="1080" height="1920"></canvas>
+
+          <!-- Top HUD Overlay inside video -->
+          <div class="video-hud">
+            <div>
+              <div class="hud-top">
+                <span class="hud-tag" id="currentSceneTag">ESCENA 1/4 • HOOK</span>
+                <span class="hud-timecode" id="timecodeDisplay">00:00.00</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="hud-progress-bar">
+                <div class="hud-progress-fill" id="progressFill"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #94A3B8;">
+                <span>SHURIAN LABS • REELS / TIKTOK</span>
+                <div class="audio-viz" id="audioViz">
+                  <div class="viz-bar"></div>
+                  <div class="viz-bar"></div>
+                  <div class="viz-bar"></div>
+                  <div class="viz-bar"></div>
+                  <div class="viz-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Controls & Export Panel -->
+      <div class="controls-panel">
+        
+        <div class="panel-header">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00D2FF" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Controles del Video
+          </h2>
+          <span class="status-pill" id="fpsDisplay">60 FPS • 1080x1920</span>
+        </div>
+
+        <!-- Scrubber -->
+        <div class="timeline-control">
+          <div class="timeline-labels">
+            <span id="elapsedLabel">0.0s</span>
+            <span style="color: #64748B;">Total: 15.0s</span>
+          </div>
+          <input type="range" class="scrubber" id="timeScrubber" min="0" max="15" step="0.05" value="0">
+        </div>
+
+        <!-- Scene Jump Buttons -->
+        <div class="scenes-grid">
+          <button class="scene-btn active" onclick="seekTo(0)">
+            <div class="scene-btn-time">00:00 - 00:03</div>
+            <div class="scene-btn-title">1. Hook Visual</div>
+          </button>
+          <button class="scene-btn" onclick="seekTo(3.0)">
+            <div class="scene-btn-time">00:03 - 00:08</div>
+            <div class="scene-btn-title">2. Casos Reales</div>
+          </button>
+          <button class="scene-btn" onclick="seekTo(8.0)">
+            <div class="scene-btn-time">00:08 - 00:11</div>
+            <div class="scene-btn-title">3. Servicios</div>
+          </button>
+          <button class="scene-btn" onclick="seekTo(11.0)">
+            <div class="scene-btn-time">00:11 - 00:15</div>
+            <div class="scene-btn-title">4. Call To Action</div>
+          </button>
+        </div>
+
+        <!-- Play/Pause Actions -->
+        <div class="actions-grid">
+          <button class="btn btn-primary" id="playBtn" onclick="togglePlay()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span id="playBtnText">Reproducir</span>
+          </button>
+          <button class="btn btn-secondary" onclick="seekTo(0)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reiniciar
+          </button>
+        </div>
+
+        <!-- Audio FX Toggle -->
+        <div class="sound-toggle">
+          <span>🔊 Efectos de Sonido Cyberpunk (Web Audio)</span>
+          <input type="checkbox" id="soundToggle" class="toggle-checkbox" checked>
+        </div>
+
+        <!-- Download Video Button -->
+        <button class="btn btn-record" id="recordBtn" onclick="startExport()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+          <span id="recordBtnText">🎥 Grabar y Descargar Video (MP4)</span>
+        </button>
+
+        <div class="storyboard-card" id="storyboardInfo">
+          <strong>Escena Actual:</strong> <span class="highlight" id="sceneHighlight">Hook Visual Cinematográfico</span><br>
+          <span id="sceneDescription">Titular de alto impacto con dispositivos flotantes e iluminación cian/menta.</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // --- VIDEO ENGINE & ASSETS CONFIGURATION ---
+    const TOTAL_DURATION = 15.0; // Seconds
+    const canvas = document.getElementById('renderCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = 1080;
+    const H = 1920;
+
+    let currentTime = 0;
+    let isPlaying = false;
+    let lastTimestamp = null;
+    let soundEnabled = true;
+
+    // Load Real Portfolio Images
+    const images = {
+      logo: new Image(),
+      shurian: new Image(),
+      resetart: new Image(),
+      puntobarba: new Image(),
+      orono: new Image()
+    };
+
+    images.logo.src = '/logo-icon.png';
+    images.shurian.src = '/portfolio/shurian-home.png';
+    images.resetart.src = '/portfolio/resetart-home.png';
+    images.puntobarba.src = '/portfolio/puntobarba-home.png';
+    images.orono.src = '/portfolio/orono-home.png';
+
+    // Particle System for Cyberpunk Atmosphere
+    const particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      size: Math.random() * 3 + 1.5,
+      speedX: (Math.random() - 0.5) * 1.5,
+      speedY: -Math.random() * 2 - 0.5,
+      alpha: Math.random() * 0.7 + 0.2,
+      color: Math.random() > 0.5 ? '#00D2FF' : '#00F5A0'
+    }));
+
+    // Circuit grid lines
+    const circuitPoints = [
+      { x: 100, y: 300, tox: 400, toy: 300 },
+      { x: 400, y: 300, tox: 400, toy: 600 },
+      { x: 980, y: 500, tox: 700, toy: 500 },
+      { x: 700, y: 500, tox: 700, toy: 800 },
+      { x: 200, y: 1500, tox: 500, toy: 1500 },
+      { x: 500, y: 1500, tox: 500, toy: 1700 }
+    ];
+
+    // --- SYNTHESIZED SOUND EFFECTS VIA WEB AUDIO API ---
+    let audioCtx = null;
+    let lastSoundScene = -1;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTechSwoosh(freqStart = 800, freqEnd = 200, duration = 0.4, type = 'sine') {
+      if (!soundEnabled) return;
+      initAudio();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freqStart, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freqEnd, audioCtx.currentTime + duration);
+
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playSubBassDrop() {
+      if (!soundEnabled) return;
+      initAudio();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(45, audioCtx.currentTime + 0.8);
+
+        gain.gain.setValueAtTime(0.6, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.8);
+      } catch (e) {}
+    }
+
+    function playLogoChime() {
+      if (!soundEnabled) return;
+      initAudio();
+      try {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          setTimeout(() => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+          }, idx * 70);
+        });
+      } catch (e) {}
+    }
+
+    // --- DRAWING UTILITIES ---
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
+    function drawGlowText(text, x, y, fontSize, color, glowColor, glowBlur = 20, align = 'center', weight = '800') {
+      ctx.save();
+      ctx.font = `${weight} ${fontSize}px 'Plus Jakarta Sans', sans-serif`;
+      ctx.textAlign = align;
+      ctx.shadowColor = glowColor;
+      ctx.shadowBlur = glowBlur;
+      ctx.fillStyle = color;
+      ctx.fillText(text, x, y);
+      ctx.shadowBlur = 0;
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+    function drawPillBadge(text, x, y, accentColor = '#00D2FF') {
+      ctx.save();
+      ctx.font = "700 24px 'JetBrains Mono', monospace";
+      const metrics = ctx.measureText(text);
+      const paddingH = 26;
+      const h = 48;
+      const w = metrics.width + paddingH * 2;
+      const startX = x - w / 2;
+      const startY = y - h / 2;
+
+      ctx.fillStyle = "rgba(19, 27, 46, 0.9)";
+      ctx.strokeStyle = accentColor;
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = accentColor;
+      ctx.shadowBlur = 15;
+      roundRect(ctx, startX, startY, w, h, 24);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = accentColor;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+    function drawParticles() {
+      ctx.save();
+      particles.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        if (p.y < 0) p.y = H;
+        if (p.x < 0) p.x = W;
+        if (p.x > W) p.x = 0;
+
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    function drawBackgroundCyberGrid(time) {
+      // Tech circuit lines
+      ctx.save();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(0, 210, 255, 0.12)";
+      circuitPoints.forEach((pt, i) => {
+        ctx.beginPath();
+        ctx.moveTo(pt.x, pt.y);
+        ctx.lineTo(pt.tox, pt.toy);
+        ctx.stroke();
+
+        // Pulsing node dots
+        const pulse = Math.sin(time * 3 + i) * 0.5 + 0.5;
+        ctx.fillStyle = i % 2 === 0 ? "#00D2FF" : "#00F5A0";
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.shadowBlur = 12 * pulse;
+        ctx.beginPath();
+        ctx.arc(pt.tox, pt.toy, 4 + pulse * 3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Neon horizon glow
+      const grad = ctx.createRadialGradient(W / 2, 800, 50, W / 2, 800, 700);
+      grad.addColorStop(0, "rgba(0, 210, 255, 0.08)");
+      grad.addColorStop(0.5, "rgba(0, 245, 160, 0.04)");
+      grad.addColorStop(1, "transparent");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+      ctx.restore();
+    }
+
+    // ==========================================
+    // ESCENA 1: HOOK (0s - 3s)
+    // ==========================================
+    function renderScene1(t) {
+      const p = t / 3.0; // 0 to 1
+      const easeOut = 1 - Math.pow(1 - p, 3);
+
+      // Camera sweep effect (zoom & subtle tilt)
+      ctx.save();
+      const scale = 1.0 + (1 - easeOut) * 0.12;
+      ctx.translate(W / 2, H / 2);
+      ctx.scale(scale, scale);
+      ctx.translate(-W / 2, -H / 2);
+
+      // Top Tag
+      drawPillBadge("⚡ SOFTWARE & PÁGINAS WEB PARA COMERCIOS", W / 2, 280, "#00D2FF");
+
+      // Main Headline with dramatic staggered entrance
+      const alphaTitle = Math.min(1, t * 2);
+      ctx.save();
+      ctx.globalAlpha = alphaTitle;
+      drawGlowText("Hacemos el sistema", W / 2, 430, 68, "#FFFFFF", "rgba(0,210,255,0.4)", 25, 'center', '900');
+      drawGlowText("que tu negocio necesita", W / 2, 510, 68, "#FFFFFF", "rgba(0,210,255,0.4)", 25, 'center', '900');
+      
+      // Gradient accent highlight
+      ctx.save();
+      const grad = ctx.createLinearGradient(W/2 - 300, 0, W/2 + 300, 0);
+      grad.addColorStop(0, "#00D2FF");
+      grad.addColorStop(1, "#00F5A0");
+      ctx.font = "900 74px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = grad;
+      ctx.shadowColor = "#00F5A0";
+      ctx.shadowBlur = 30;
+      ctx.fillText("PARA VENDER MÁS", W / 2, 610);
+      ctx.shadowBlur = 0;
+      ctx.fillText("PARA VENDER MÁS", W / 2, 610);
+      ctx.restore();
+
+      drawGlowText("Y TRABAJAR MEJOR", W / 2, 690, 52, "#94A3B8", "transparent", 0, 'center', '800');
+      ctx.restore();
+
+      // 3D Isometric Mockup of Laptop + Smartphone
+      const mockupY = 1200 + (1 - easeOut) * 200;
+      ctx.save();
+      ctx.translate(W / 2, mockupY);
+
+      // Laptop Base
+      ctx.fillStyle = "#1E293B";
+      ctx.strokeStyle = "#00D2FF";
+      ctx.lineWidth = 3;
+      ctx.shadowColor = "#00D2FF";
+      ctx.shadowBlur = 35;
+      roundRect(ctx, -380, -220, 760, 440, 24);
+      ctx.fill();
+      ctx.stroke();
+
+      // Laptop Screen Content (Project preview)
+      if (images.shurian.complete && images.shurian.naturalWidth) {
+        ctx.save();
+        roundRect(ctx, -360, -200, 720, 400, 16);
+        ctx.clip();
+        ctx.drawImage(images.shurian, -360, -200, 720, 400);
+        ctx.restore();
+      }
+
+      // Laptop keyboard stand
+      ctx.fillStyle = "#0F172A";
+      ctx.strokeStyle = "rgba(0, 245, 160, 0.4)";
+      roundRect(ctx, -420, 220, 840, 28, 14);
+      ctx.fill();
+      ctx.stroke();
+
+      // Floating Phone on the right
+      const phoneFloat = Math.sin(t * 4) * 12;
+      ctx.save();
+      ctx.translate(260, 40 + phoneFloat);
+      ctx.rotate(-0.08);
+      ctx.fillStyle = "#090D16";
+      ctx.strokeStyle = "#00F5A0";
+      ctx.lineWidth = 4;
+      ctx.shadowColor = "#00F5A0";
+      ctx.shadowBlur = 30;
+      roundRect(ctx, -120, -240, 240, 480, 32);
+      ctx.fill();
+      ctx.stroke();
+
+      if (images.puntobarba.complete && images.puntobarba.naturalWidth) {
+        ctx.save();
+        roundRect(ctx, -110, -230, 220, 460, 24);
+        ctx.clip();
+        ctx.drawImage(images.puntobarba, -110, -230, 220, 460);
+        ctx.restore();
+      }
+      ctx.restore();
+
+      ctx.restore(); // Mockup translate
+
+      ctx.restore(); // Camera
+    }
+
+    // ==========================================
+    // ESCENA 2: PORTFOLIO / CASOS REALES (3s - 8s)
+    // ==========================================
+    const CLIENT_PROJECTS = [
+      {
+        name: "Shurian Store & Lab",
+        tag: "🛍️ TIENDA + REPARACIONES",
+        metric: "Pedidos directo a WhatsApp",
+        imgKey: "shurian",
+        color: "#00D2FF"
+      },
+      {
+        name: "Reset ART Barbershop",
+        tag: "💈 LANDING + ACADEMIA",
+        metric: "Identidad visual de alto impacto",
+        imgKey: "resetart",
+        color: "#00F5A0"
+      },
+      {
+        name: "Punto Barba Barbería",
+        tag: "📅 SISTEMA DE TURNOS 24/7",
+        metric: "Elección de barbero y horario",
+        imgKey: "puntobarba",
+        color: "#00D2FF"
+      },
+      {
+        name: "Oroño Bike",
+        tag: "🚴 E-COMMERCE + MERCADOPAGO",
+        metric: "Simulador de cuotas online",
+        imgKey: "orono",
+        color: "#00F5A0"
+      }
+    ];
+
+    function renderScene2(t) {
+      const localTime = t - 3.0; // 0 to 5.0s
+      
+      // Top Section Tag
+      drawPillBadge("🔥 CASOS REALES EN PRODUCCIÓN", W / 2, 220, "#00F5A0");
+      drawGlowText("Negocios reales", W / 2, 330, 60, "#FFFFFF", "rgba(0, 245, 160, 0.3)", 20, 'center', '900');
+      drawGlowText("funcionando en automático", W / 2, 395, 42, "#00D2FF", "rgba(0, 210, 255, 0.4)", 20, 'center', '800');
+
+      // Rapid Dynamic Scroll of 4 Project Cards
+      const cardDuration = 5.0 / 4; // 1.25s per project card
+      const currentIndex = Math.min(3, Math.floor(localTime / cardDuration));
+      const cardProgress = (localTime % cardDuration) / cardDuration;
+      const currentProject = CLIENT_PROJECTS[currentIndex];
+
+      // Smooth slide-in & scale animation
+      const slideIn = Math.min(1, cardProgress * 3.5);
+      const easeSlide = 1 - Math.pow(1 - slideIn, 3);
+      const cardY = 1120 + (1 - easeSlide) * 150;
+      const cardScale = 0.95 + easeSlide * 0.05;
+
+      ctx.save();
+      ctx.translate(W / 2, cardY);
+      ctx.scale(cardScale, cardScale);
+
+      // Outer Card Box
+      const cardW = 920;
+      const cardH = 1180;
+      ctx.fillStyle = "#131B2E";
+      ctx.strokeStyle = currentProject.color;
+      ctx.lineWidth = 4;
+      ctx.shadowColor = currentProject.color;
+      ctx.shadowBlur = 40;
+      roundRect(ctx, -cardW / 2, -cardH / 2, cardW, cardH, 36);
+      ctx.fill();
+      ctx.stroke();
+
+      // Project Screenshot Area
+      const img = images[currentProject.imgKey];
+      if (img && img.complete && img.naturalWidth) {
+        ctx.save();
+        roundRect(ctx, -cardW / 2 + 20, -cardH / 2 + 20, cardW - 40, 780, 26);
+        ctx.clip();
+        ctx.drawImage(img, -cardW / 2 + 20, -cardH / 2 + 20, cardW - 40, 780);
+        
+        // Gradient overlay at bottom of image
+        const imgGrad = ctx.createLinearGradient(0, -cardH / 2 + 500, 0, -cardH / 2 + 800);
+        imgGrad.addColorStop(0, "transparent");
+        imgGrad.addColorStop(1, "#131B2E");
+        ctx.fillStyle = imgGrad;
+        ctx.fillRect(-cardW / 2 + 20, -cardH / 2 + 500, cardW - 40, 300);
+        ctx.restore();
+      }
+
+      // Card Information & Badges
+      const infoY = 180;
+      drawPillBadge(currentProject.tag, 0, infoY, currentProject.color);
+
+      drawGlowText(currentProject.name, 0, infoY + 80, 52, "#FFFFFF", "rgba(255,255,255,0.3)", 15, 'center', '800');
+      drawGlowText(currentProject.metric, 0, infoY + 140, 34, "#94A3B8", "transparent", 0, 'center', '600');
+
+      // Live URL badge
+      ctx.fillStyle = "rgba(9, 13, 22, 0.8)";
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+      ctx.lineWidth = 2;
+      roundRect(ctx, -260, infoY + 185, 520, 60, 30);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#00D2FF";
+      ctx.font = "700 24px 'JetBrains Mono', monospace";
+      ctx.textAlign = "center";
+      ctx.fillText("🟢 PROYECTO ACTIVO EN VIVO", 0, infoY + 224);
+
+      ctx.restore();
+
+      // Bottom Staggered Progress Indicators (Dots)
+      ctx.save();
+      const dotSpacing = 40;
+      const startDotX = W / 2 - ((CLIENT_PROJECTS.length - 1) * dotSpacing) / 2;
+      CLIENT_PROJECTS.forEach((_, idx) => {
+        const dotX = startDotX + idx * dotSpacing;
+        ctx.beginPath();
+        ctx.arc(dotX, 1800, idx === currentIndex ? 8 : 4, 0, Math.PI * 2);
+        ctx.fillStyle = idx === currentIndex ? "#00F5A0" : "#334155";
+        if (idx === currentIndex) {
+          ctx.shadowColor = "#00F5A0";
+          ctx.shadowBlur = 15;
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+      ctx.restore();
+    }
+
+    // ==========================================
+    // ESCENA 3: SERVICIOS Y PROCESO ÁGIL (8s - 11s)
+    // ==========================================
+    const SERVICES = [
+      {
+        title: "Páginas Web y Tiendas Online",
+        desc: "Catálogos con fotos y precios. Pedidos directos a tu WhatsApp o cobro automático con MercadoPago.",
+        icon: "🛍️",
+        color: "#00D2FF"
+      },
+      {
+        title: "Respuestas Automáticas WhatsApp",
+        desc: "Asistente inteligente 24/7 que responde precios, stock, horarios y turnos sin demoras.",
+        icon: "💬",
+        color: "#00F5A0"
+      },
+      {
+        title: "Sistemas de Gestión a Medida",
+        desc: "Ordená tus turnos, clientes, stock y presupuestos desde cualquier celular o PC.",
+        icon: "⚡",
+        color: "#00D2FF"
+      }
+    ];
+
+    function renderScene3(t) {
+      const localTime = t - 8.0; // 0 to 3s
+
+      drawPillBadge("🚀 SOLUCIONES A TU MEDIDA", W / 2, 230, "#00D2FF");
+      drawGlowText("Tecnología simple", W / 2, 340, 64, "#FFFFFF", "rgba(0,210,255,0.4)", 20, 'center', '900');
+      drawGlowText("pensada para tu negocio", W / 2, 410, 44, "#00F5A0", "rgba(0,245,160,0.4)", 20, 'center', '800');
+
+      // Staggered 3 Cards entrance
+      SERVICES.forEach((srv, i) => {
+        const cardDelay = i * 0.35;
+        const cardP = Math.max(0, Math.min(1, (localTime - cardDelay) * 3));
+        const easeCard = 1 - Math.pow(1 - cardP, 3);
+
+        const cardY = 560 + i * 360 + (1 - easeCard) * 120;
+        const cardAlpha = easeCard;
+
+        ctx.save();
+        ctx.globalAlpha = cardAlpha;
+        ctx.translate(W / 2, cardY);
+
+        const sW = 900;
+        const sH = 310;
+
+        // Card container
+        ctx.fillStyle = "rgba(19, 27, 46, 0.85)";
+        ctx.strokeStyle = srv.color;
+        ctx.lineWidth = 3;
+        ctx.shadowColor = srv.color;
+        ctx.shadowBlur = 25 * easeCard;
+        roundRect(ctx, -sW / 2, -sH / 2, sW, sH, 28);
+        ctx.fill();
+        ctx.stroke();
+
+        // Icon Circle
+        ctx.fillStyle = "#090D16";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 0;
+        roundRect(ctx, -sW / 2 + 40, -60, 120, 120, 24);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = "60px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(srv.icon, -sW / 2 + 100, 0);
+
+        // Title & Description
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        drawGlowText(srv.title, -sW / 2 + 190, -10, 40, "#FFFFFF", "transparent", 0, 'left', '800');
+
+        // Multi-line description wrapping
+        ctx.font = "500 26px 'Plus Jakarta Sans', sans-serif";
+        ctx.fillStyle = "#94A3B8";
+        const words = srv.desc.split(" ");
+        let line = "";
+        let currentY = 40;
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + " ";
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > 650 && n > 0) {
+            ctx.fillText(line, -sW / 2 + 190, currentY);
+            line = words[n] + " ";
+            currentY += 36;
+          } else {
+            line = testLine;
+          }
+        }
+        ctx.fillText(line, -sW / 2 + 190, currentY);
+
+        ctx.restore();
+      });
+
+      // Bottom Micro-badge
+      ctx.save();
+      const bottomAlpha = Math.max(0, Math.min(1, (localTime - 1.2) * 2));
+      ctx.globalAlpha = bottomAlpha;
+      drawPillBadge("⚡ LISTO EN POCOS DÍAS • LLAVE EN MANO", W / 2, 1720, "#00F5A0");
+      ctx.restore();
+    }
+
+    // ==========================================
+    // ESCENA 4: CALL TO ACTION (11s - 15s)
+    // ==========================================
+    function renderScene4(t) {
+      const localTime = t - 11.0; // 0 to 4s
+      const easeLogo = Math.min(1, localTime * 2);
+
+      // Ambient expanding shockwave
+      const shockwaveRadius = (localTime * 400) % 1200;
+      ctx.save();
+      ctx.strokeStyle = "rgba(0, 210, 255, " + Math.max(0, (1 - shockwaveRadius / 1200) * 0.4) + ")";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(W / 2, 700, shockwaveRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // Top hook phrase
+      drawPillBadge("¿TENÉS UNA IDEA O QUERÉS ORDENAR TU NEGOCIO?", W / 2, 280, "#00D2FF");
+
+      // Centered Logo with Glowing Circuit Assembly
+      const logoScale = 0.8 + easeLogo * 0.2 + Math.sin(localTime * 3) * 0.02;
+      const logoSize = 340;
+
+      ctx.save();
+      ctx.translate(W / 2, 680);
+      ctx.scale(logoScale, logoScale);
+
+      // Squircle glowing backing
+      ctx.fillStyle = "#090D16";
+      ctx.strokeStyle = "#00D2FF";
+      ctx.lineWidth = 6;
+      ctx.shadowColor = "#00F5A0";
+      ctx.shadowBlur = 50;
+      roundRect(ctx, -logoSize / 2, -logoSize / 2, logoSize, logoSize, 70);
+      ctx.fill();
+      ctx.stroke();
+
+      // Isotype Image
+      if (images.logo.complete && images.logo.naturalWidth) {
+        ctx.drawImage(images.logo, -logoSize / 2 + 25, -logoSize / 2 + 25, logoSize - 50, logoSize - 50);
+      }
+      ctx.restore();
+
+      // Brand Title
+      ctx.save();
+      ctx.translate(W / 2, 990);
+      ctx.font = "900 68px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#FFFFFF";
+      ctx.shadowColor = "rgba(0,210,255,0.6)";
+      ctx.shadowBlur = 25;
+      ctx.fillText("SHURIAN [LABS]", 0, 0);
+      ctx.shadowBlur = 0;
+      ctx.fillText("SHURIAN [LABS]", 0, 0);
+      ctx.restore();
+
+      drawGlowText("Desarrollo de Software & Automatizaciones", W / 2, 1070, 36, "#94A3B8", "transparent", 0, 'center', '600');
+
+      // Pulsing Interactive "Pedir Presupuesto" Button
+      const btnPulse = Math.sin(localTime * 5) * 6;
+      ctx.save();
+      ctx.translate(W / 2, 1320);
+
+      const bW = 820;
+      const bH = 140;
+
+      // Glow behind button
+      ctx.shadowColor = "#00F5A0";
+      ctx.shadowBlur = 50 + btnPulse * 2;
+      const btnGrad = ctx.createLinearGradient(-bW / 2, 0, bW / 2, 0);
+      btnGrad.addColorStop(0, "#00D2FF");
+      btnGrad.addColorStop(1, "#00F5A0");
+      ctx.fillStyle = btnGrad;
+      roundRect(ctx, -bW / 2, -bH / 2, bW, bH, 35);
+      ctx.fill();
+
+      // Button Text
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "#090D16";
+      ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("👉 PEDIR PRESUPUESTO", 0, 0);
+      ctx.restore();
+
+      // Official Domain & WhatsApp contact
+      const domY = 1550;
+      ctx.fillStyle = "rgba(19, 27, 46, 0.9)";
+      ctx.strokeStyle = "rgba(0, 210, 255, 0.4)";
+      ctx.lineWidth = 3;
+      roundRect(ctx, W / 2 - 420, domY - 50, 840, 100, 28);
+      ctx.fill();
+      ctx.stroke();
+
+      drawGlowText("🌐 www.shurianlabs.com.ar", W / 2, domY + 12, 42, "#00D2FF", "#00D2FF", 15, 'center', '800');
+
+      // Final Callout
+      drawGlowText("📲 Cotizá tu proyecto hoy mismo por WhatsApp", W / 2, 1720, 32, "#FFFFFF", "transparent", 0, 'center', '600');
+      drawGlowText("Sin costo ni compromiso", W / 2, 1770, 26, "#94A3B8", "transparent", 0, 'center', '500');
+    }
+
+    // ==========================================
+    // MAIN MASTER RENDER LOOP
+    // ==========================================
+    function render(time) {
+      // Clear with dark background
+      ctx.fillStyle = "#090D16";
+      ctx.fillRect(0, 0, W, H);
+
+      drawBackgroundCyberGrid(time);
+      drawParticles();
+
+      // Trigger Audio Events on Scene Changes
+      let currentScene = 1;
+      if (time < 3.0) {
+        currentScene = 1;
+        renderScene1(time);
+      } else if (time < 8.0) {
+        currentScene = 2;
+        renderScene2(time);
+      } else if (time < 11.0) {
+        currentScene = 3;
+        renderScene3(time);
+      } else {
+        currentScene = 4;
+        renderScene4(time);
+      }
+
+      if (currentScene !== lastSoundScene) {
+        if (currentScene === 1) playSubBassDrop();
+        if (currentScene === 2) playTechSwoosh(600, 250, 0.35, 'sawtooth');
+        if (currentScene === 3) playTechSwoosh(750, 300, 0.35, 'triangle');
+        if (currentScene === 4) {
+          playSubBassDrop();
+          setTimeout(playLogoChime, 250);
+        }
+        lastSoundScene = currentScene;
+      }
+
+      // Update UI Overlays
+      updateHUD(time, currentScene);
+    }
+
+    function updateHUD(time, scene) {
+      const sec = Math.floor(time);
+      const ms = Math.floor((time - sec) * 100);
+      const formatted = `00:${sec.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
+      
+      document.getElementById('timecodeDisplay').textContent = formatted;
+      document.getElementById('elapsedLabel').textContent = `${time.toFixed(1)}s`;
+      document.getElementById('timeScrubber').value = time;
+      document.getElementById('progressFill').style.width = `${(time / TOTAL_DURATION) * 100}%`;
+
+      const sceneTags = {
+        1: "ESCENA 1/4 • HOOK",
+        2: "ESCENA 2/4 • CASOS REALES",
+        3: "ESCENA 3/4 • SERVICIOS",
+        4: "ESCENA 4/4 • CALL TO ACTION"
+      };
+      document.getElementById('currentSceneTag').textContent = sceneTags[scene];
+
+      // Update Scene Description in right panel
+      const sceneDescriptions = {
+        1: { title: "Hook Visual Cinematográfico", desc: "Laptop y celular en ángulo con titular: 'Hacemos el sistema que tu negocio necesita para vender más y trabajar mejor'." },
+        2: { title: "Portfolio de Clientes Reales", desc: "Recorrido ágil por Shurian Store, Reset ART Barbershop, Punto Barba y Oroño Bike con sus etiquetas oficiales." },
+        3: { title: "Servicios y Automatización", desc: "Visualización de Páginas Web, Respuestas por WhatsApp 24/7 y Sistemas de Gestión a Medida." },
+        4: { title: "Cierre & Call To Action", desc: "Animación de isotipo neón 'S', botón 'Pedir Presupuesto' y enlace claro www.shurianlabs.com.ar." }
+      };
+
+      document.getElementById('sceneHighlight').textContent = sceneDescriptions[scene].title;
+      document.getElementById('sceneDescription').textContent = sceneDescriptions[scene].desc;
+
+      // Update active scene chip
+      document.querySelectorAll('.scene-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx + 1 === scene);
+      });
+
+      // Animate Audio Viz Bars
+      if (isPlaying) {
+        document.querySelectorAll('.viz-bar').forEach(b => {
+          b.style.height = `${Math.floor(Math.random() * 12 + 3)}px`;
+        });
+      }
+    }
+
+    // --- PLAYBACK CONTROLLER ---
+    function step(timestamp) {
+      if (!isPlaying) {
+        lastTimestamp = null;
+        return;
+      }
+
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      currentTime += delta;
+
+      if (currentTime >= TOTAL_DURATION) {
+        currentTime = TOTAL_DURATION;
+        render(currentTime);
+        pause();
+        return;
+      }
+
+      render(currentTime);
+      requestAnimationFrame(step);
+    }
+
+    function play() {
+      isPlaying = true;
+      initAudio();
+      document.getElementById('playBtnText').textContent = 'Pausar';
+      requestAnimationFrame(step);
+    }
+
+    function pause() {
+      isPlaying = false;
+      document.getElementById('playBtnText').textContent = 'Reproducir';
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        pause();
+      } else {
+        if (currentTime >= TOTAL_DURATION) {
+          currentTime = 0;
+          lastSoundScene = -1;
+        }
+        play();
+      }
+    }
+
+    function seekTo(targetTime) {
+      currentTime = Math.max(0, Math.min(TOTAL_DURATION, targetTime));
+      lastSoundScene = -1;
+      render(currentTime);
+      if (!isPlaying) {
+        updateHUD(currentTime, Math.min(4, Math.floor(currentTime / 3.75) + 1));
+      }
+    }
+
+    document.getElementById('timeScrubber').addEventListener('input', (e) => {
+      seekTo(parseFloat(e.target.value));
+    });
+
+    document.getElementById('soundToggle').addEventListener('change', (e) => {
+      soundEnabled = e.target.checked;
+    });
+
+    // --- 4K/FHD VIDEO EXPORT VIA MEDIARECORDER API ---
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+
+    async function startExport() {
+      const recordBtn = document.getElementById('recordBtn');
+      const recordBtnText = document.getElementById('recordBtnText');
+
+      if (isRecording) return;
+      isRecording = true;
+      pause();
+      seekTo(0);
+      lastSoundScene = -1;
+
+      recordBtn.classList.add('recording');
+      recordBtnText.textContent = "⏺️ Grabando a 60 FPS... (0%)";
+
+      // Capture stream from canvas at 60 FPS
+      const stream = canvas.captureStream(60);
+
+      // Support MP4 or WebM
+      let options = { mimeType: 'video/mp4;codecs=avc1' };
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options = { mimeType: 'video/webm;codecs=vp9' };
+      }
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options = { mimeType: 'video/webm' };
+      }
+
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream, options);
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          recordedChunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const ext = options.mimeType.includes('mp4') ? 'mp4' : 'webm';
+        const blob = new Blob(recordedChunks, { type: options.mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `shurian-labs-promo-9x16.${ext}`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 100);
+
+        recordBtn.classList.remove('recording');
+        recordBtnText.textContent = "✅ Video Descargado con Éxito";
+        setTimeout(() => {
+          recordBtnText.textContent = "🎥 Grabar y Descargar Video (MP4)";
+          isRecording = false;
+        }, 3000);
+      };
+
+      mediaRecorder.start();
+
+      // Render exactly 15 seconds at 60 FPS in locked time steps
+      const fps = 60;
+      const totalFrames = TOTAL_DURATION * fps;
+      let frame = 0;
+
+      function renderFrame() {
+        if (frame > totalFrames) {
+          mediaRecorder.stop();
+          return;
+        }
+
+        currentTime = frame / fps;
+        render(currentTime);
+
+        const pct = Math.floor((frame / totalFrames) * 100);
+        recordBtnText.textContent = `⏺️ Procesando Video... (${pct}%)`;
+
+        frame++;
+        requestAnimationFrame(renderFrame);
+      }
+
+      renderFrame();
+    }
+
+    // Initial render once images ready
+    let loadedCount = 0;
+    const totalImgs = Object.keys(images).length;
+    Object.values(images).forEach(img => {
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount >= totalImgs) {
+          render(0);
+        }
+      };
+    });
+
+    // Fallback if cached
+    setTimeout(() => {
+      render(0);
+    }, 200);
+
+  </script>
+</body>
+</html>
