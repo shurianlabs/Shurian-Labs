@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "video:preview": "remotion preview remotion/index.ts",
+    "video:render": "remotion render remotion/index.ts ShurianLabsPromo out/shurian-labs-promo-9x16.mp4"
   },
   "dependencies": {
     "@remotion/player": "^4.0.537",
